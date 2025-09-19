@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adriana Sousa - Transformação Mental</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #F8F5F0;
+            --text: #33353A;
+            --accent: #D4AF37;
+            --dark: #1A2035;
+            --white: #ffffff;
+            --red: #DC2626;
+            --success: #10B981;
+            --purple: #7C3AED;
+            
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 70%, #B8860B 100%);
+            --shadow-luxury: 0 15px 50px rgba(26, 32, 53, 0.2);
+            --shadow-glow: 0 0 40px rgba(212, 175, 55, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #F8F5F0 0%, #E8E5E0 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-attachment: fixed;
+            transition: background 2s ease;
+        }
+
+        body.video-mode {
+            background: var(--dark);
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            transition: all 2s ease;
+        }
+
+        .container.transitioning {
+            opacity: 0.3;
+        }
+
+        /* Header principal */
+        .header {
+            text-align: center;
+            padding: 25px 20px 20px;
+            background: var(--white);
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-luxury);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: 900;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .specialty {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 15px;
+            width: 100%;
+            display: inline-block;
+        }
+
+        /* Avatar principal */
+        .avatar-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .avatar {
+            width: var(--avatar-width, 200px);
+            height: var(--avatar-height, 300px);
+            object-fit: cover;
+            border-radius: 15px;
+            border: 3px solid rgba(212, 175, 55, 0.6);
+            box-shadow: var(--shadow-luxury);
+            transition: all 0.5s ease;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        .avatar.speaking {
+            border-color: var(--success);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Mensagens do avatar */
+        .avatar-text-overlay {
+            position: absolute;
+            top: 28%;
+            left: 55%;
+            transform: translateX(-50%);
+            width: var(--overlay-width, 120px);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .avatar-message {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 4px 6px;
+            font-size: var(--message-font-size, 10px);
+            font-weight: 900;
+            color: var(--dark);
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8) translateY(10px);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: none;
+            text-shadow: 
+                2px 2px 4px rgba(255, 255, 255, 0.95),
+                -1px -1px 2px rgba(255, 255, 255, 0.8),
+                0 0 8px rgba(255, 255, 255, 0.9);
+            line-height: 1.2;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .avatar-message.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .avatar-message.shock {
+            color: var(--red);
+            font-size: var(--message-shock-size, 13px);
+            font-weight: 900;
+            text-shadow: 
+                2px 2px 4px rgba(255, 245, 245, 0.95),
+                -1px -1px 2px rgba(255, 245, 245, 0.8),
+                0 0 12px rgba(220, 38, 38, 0.4);
+            animation: shock-pulse 0.5s ease-out;
+        }
+
+        .avatar-message.cultural {
+            color: var(--success);
+            font-size: var(--message-cultural-size, 12px);
+            font-weight: 900;
+            text-shadow: 
+                2px 2px 4px rgba(245, 255, 245, 0.95),
+                -1px -1px 2px rgba(245, 255, 245, 0.8),
+                0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .avatar-message.location {
+            color: var(--accent);
+            font-size: var(--message-location-size, 12px);
+            font-weight: 900;
+            text-shadow: 
+                2px 2px 4px rgba(255, 252, 235, 0.95),
+                -1px -1px 2px rgba(255, 252, 235, 0.8),
+                0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        @keyframes shock-pulse {
+            0% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.1) translateY(-5px); }
+            100% { transform: scale(1) translateY(0); }
+        }
+
+        /* Transição avatar para card */
+        .avatar.transforming {
+            transform: rotateY(180deg) scale(1.2);
+            transition: all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+        }
+
+        /* Overlay fixo para card */
+        .reflection-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .reflection-overlay.show {
+            display: flex;
+        }
+
+        /* Card de reflexão 3D com transição para vídeo - agora no overlay */
+        .reflection-card-3d {
+            perspective: 1000px;
+            width: 90%;
+            max-width: 400px;
+            height: 520px;
+            position: relative;
+        }
+
+        .card-3d-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            transform: rotateY(-180deg);
+        }
+
+        .reflection-overlay.show .card-3d-inner {
+            transform: rotateY(0deg);
+        }
+
+        .reflection-overlay.transitioning .card-3d-inner {
+            transform: rotateY(180deg) scale(1.3);
+            transition: transform 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .card-3d-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
+            border-radius: 25px;
+            box-shadow: 
+                0 30px 100px rgba(124, 58, 237, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            padding: 35px 25px 80px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .card-question {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            line-height: 1.3;
+            text-align: center;
+            color: #FFD700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        .card-insight {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            text-align: center;
+            opacity: 0.95;
+        }
+
+        .card-cta {
+            font-size: 17px;
+            font-weight: 800;
+            text-align: center;
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            animation: pulse-golden 2s ease-in-out infinite;
+        }
+
+        /* Indicador de "Continue" - reposicionado dentro do card */
+        .continue-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 215, 0, 0.9);
+            color: var(--dark);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 700;
+            opacity: 0;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+        }
+
+        .continue-indicator.show {
+            opacity: 1;
+            animation: gentle-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes gentle-pulse {
+            0%, 100% { 
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            }
+            50% { 
+                transform: translateX(-50%) scale(1.05);
+                box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+            }
+        }
+
+        .card-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+            animation: card-shine 4s ease-in-out 1s;
+        }
+
+        @keyframes card-shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Transição para seção do vídeo */
+        .video-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--dark);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1000;
+        }
+
+        .video-section.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .video-title {
+            color: white;
+            font-size: 24px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease 1s;
+        }
+
+        .video-section.show .video-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .video-container {
+            width: 90%;
+            max-width: 480px;
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1.5s ease 1.5s;
+            position: relative;
+        }
+
+        .video-section.show .video-container {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #specialVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Badge de valor no vídeo */
+        .value-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 8px 15px;
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.8s ease 2s;
+        }
+
+        .video-section.show .value-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .value-badge.price-reveal {
+            background: var(--gold-gradient);
+            color: var(--dark);
+            font-size: 16px;
+            animation: price-pulse 1s ease-out;
+        }
+
+        @keyframes price-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Nome do método */
+        .method-name {
+            font-size: 24px;
+            font-weight: 900;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Botão de ação final */
+        .final-action {
+            text-align: center;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease 2.5s;
+        }
+
+        .video-section.show .final-action {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .final-btn {
+            background: var(--gold-gradient);
+            color: var(--dark);
+            border: none;
+            padding: 22px 45px;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 12px 40px rgba(212, 175, 55, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent
+            );
+            transition: left 0.6s ease;
+        }
+
+        .final-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(212, 175, 55, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .final-btn:hover:before {
+            left: 100%;
+        }
+
+        .final-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 20px;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        /* Loading states */
+        .loading-dots {
+            display: inline-block;
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+        }
+
+        /* Sistema de responsividade */
+        @media (min-width: 430px) {
+            :root {
+                --avatar-width: 240px;
+                --avatar-height: 360px;
+                --overlay-width: 140px;
+                --message-font-size: 12px;
+                --message-shock-size: 15px;
+                --message-cultural-size: 14px;
+                --message-location-size: 14px;
+            }
+            
+            .container {
+                max-width: 430px;
+                padding: 25px;
+            }
+            
+            .name {
+                font-size: 28px;
+            }
+            
+            .specialty {
+                font-size: 16px;
+            }
+        }
+
+        @media (min-width: 375px) and (max-width: 429px) {
+            :root {
+                --avatar-width: 220px;
+                --avatar-height: 330px;
+                --overlay-width: 130px;
+                --message-font-size: 11px;
+                --message-shock-size: 14px;
+                --message-cultural-size: 13px;
+                --message-location-size: 13px;
+            }
+            
+            .name {
+                font-size: 26px;
+            }
+            
+            .specialty {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 359px) {
+            :root {
+                --avatar-width: 180px;
+                --avatar-height: 270px;
+                --overlay-width: 110px;
+                --message-font-size: 9px;
+                --message-shock-size: 12px;
+                --message-cultural-size: 11px;
+                --message-location-size: 11px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .name {
+                font-size: 22px;
+            }
+            
+            .specialty {
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            :root {
+                --avatar-width: 280px;
+                --avatar-height: 420px;
+                --overlay-width: 160px;
+                --message-font-size: 14px;
+                --message-shock-size: 17px;
+                --message-cultural-size: 16px;
+                --message-location-size: 16px;
+            }
+            
+            .container {
+                max-width: 500px;
+                padding: 30px;
+            }
+            
+            .name {
+                font-size: 32px;
+            }
+            
+            .specialty {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container" id="mainContainer">
+        <!-- Header principal -->
+        <div class="header">
+            <h1 class="name">ADRIANA SOUSA</h1>
+            <p class="specialty">Especialista em Transformação Mental</p>
+            
+            <div class="avatar-container">
+                <img src="https://adriana-cdn.b-cdn.net/Adriana-vmake%20(1).png" 
+                     alt="Adriana Sousa" 
+                     class="avatar" 
+                     id="avatar"
+                     onerror="this.src='https://github.com/marcelo-davila-setup/dris/raw/main/Design%20sem%20nome.png'">
+                
+                <div class="avatar-text-overlay">
+                    <div class="avatar-message" id="avatarMessage">
+                        Analisando<span class="loading-dots"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card de reflexão 3D com transição para vídeo -->
+        <div class="reflection-card-3d" id="reflectionCard3D">
+            <div class="card-3d-inner">
+                <div class="card-3d-face">
+                    <div class="card-question" id="cardQuestion">
+                        <!-- Preenchido dinamicamente -->
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-insight" id="cardInsight">
+                        <!-- Preenchido dinamicamente -->
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-cta" id="cardCta">
+                        <!-- Preenchido dinamicamente -->
+                    </div>
+                    <div class="card-shine"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay fixo para card de reflexão -->
+    <div class="reflection-overlay" id="reflectionOverlay">
+        <div class="reflection-card-3d" id="reflectionCard3DOverlay">
+            <div class="card-3d-inner">
+                <div class="card-3d-face">
+                    <div class="card-question" id="cardQuestionOverlay">
+                        <!-- Preenchido dinamicamente -->
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-insight" id="cardInsightOverlay">
+                        <!-- Preenchido dinamicamente -->
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-cta" id="cardCtaOverlay">
+                        <!-- Preenchido dinamicamente -->
+                    </div>
+                    <div class="card-shine"></div>
+                    
+                    <!-- Indicador de continue -->
+                    <div class="continue-indicator" id="continueIndicator">
+                        <!-- Preenchido dinamicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção do vídeo - Fullscreen overlay -->
+    <div class="video-section" id="videoSection">
+        <div class="video-title" id="videoTitle">
+            Como Funciona o Método
+        </div>
+        
+        <div class="video-container" id="videoContainer">
+            <video id="specialVideo" preload="metadata" controls playsinline>
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                Seu navegador não suporta vídeo HTML5.
+            </video>
+
+            <!-- Badge de valor -->
+            <div class="value-badge" id="valueBadge">
+                Método Completo
+            </div>
+        </div>
+
+        <!-- Ação final -->
+        <div class="final-action" id="finalAction">
+            <div class="method-name">
+                "Conhecer a Ti Mesmo"
+            </div>
+            <button class="final-btn" onclick="buyNow()">
+                Quero Começar Minha Transformação
+            </button>
+            <div class="final-description">
+                Acesso completo ao método de autoconhecimento
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados regionais completos - 27 estados + DF com gírias autênticas
+        const REGIONAL_DATA = {
+            'AC': { greeting: 'E aí', region: 'Norte amazônico', food: 'açaí', expression: 'Bora lá!', gentilico: 'Acreano', casual: 'caboclo', question: 'né mesmo?' },
+            'AL': { greeting: 'Opa', region: 'Litoral nordestino', food: 'sururu', expression: 'Oxe!', gentilico: 'Alagoano', casual: 'cabra', question: 'é ou num é?' },
+            'AP': { greeting: 'E aí', region: 'Norte amazônico', food: 'açaí', expression: 'Massa!', gentilico: 'Amapaense', casual: 'paraense', question: 'tá ligado?' },
+            'AM': { greeting: 'Fala', region: 'Coração da Amazônia', food: 'tucumã', expression: 'Maneiro!', gentilico: 'Amazonense', casual: 'caboclo', question: 'tá sacando?' },
+            'BA': { greeting: 'Oxe', region: 'Nordeste baiano', food: 'acarajé', expression: 'Oxente!', gentilico: 'Baiano', casual: 'criatura', question: 'num é não?' },
+            'CE': { greeting: 'Eita', region: 'Nordeste cearense', food: 'tapioca', expression: 'Arretado!', gentilico: 'Cearense', casual: 'cabra', question: 'né não?' },
+            'DF': { greeting: 'Fala', region: 'Centro do país', food: 'pamonha', expression: 'Massa!', gentilico: 'Brasiliense', casual: 'pessoa', question: 'sacou?' },
+            'ES': { greeting: 'Opa', region: 'Litoral capixaba', food: 'moqueca', expression: 'Capixaba raiz!', gentilico: 'Capixaba', casual: 'conterrâneo', question: 'entendeu?' },
+            'GO': { greeting: 'Oi, gente', region: 'Centro-Oeste goiano', food: 'pequi', expression: 'Trem bão!', gentilico: 'Goiano', casual: 'sô', question: 'né não?' },
+            'MA': { greeting: 'Rapaz', region: 'Nordeste maranhense', food: 'arroz de cuxá', expression: 'Eita!', gentilico: 'Maranhense', casual: 'pessoa', question: 'tá entendendo?' },
+            'MT': { greeting: 'E aí', region: 'Centro-Oeste', food: 'pacu pintado', expression: 'Tá osso!', gentilico: 'Mato-grossense', casual: 'peão', question: 'sacou?' },
+            'MS': { greeting: 'Opa', region: 'Centro-Oeste sul', food: 'sobá', expression: 'Barbaridade!', gentilico: 'Sul-mato-grossense', casual: 'guri', question: 'né guri?' },
+            'MG': { greeting: 'Uai', region: 'Interior mineiro', food: 'pão de queijo', expression: 'Trem bom!', gentilico: 'Mineiro', casual: 'sô', question: 'né não, sô?' },
+            'PA': { greeting: 'Fala', region: 'Norte paraense', food: 'açaí', expression: 'Oxe!', gentilico: 'Paraense', casual: 'caboclo', question: 'sacou?' },
+            'PB': { greeting: 'Oxe', region: 'Nordeste paraibano', food: 'carne de sol', expression: 'Arretado!', gentilico: 'Paraibano', casual: 'cabra', question: 'né não?' },
+            'PR': { greeting: 'Opa', region: 'Sul paranaense', food: 'barreado', expression: 'Barbaridade!', gentilico: 'Paranaense', casual: 'guri', question: 'né guri?' },
+            'PE': { greeting: 'Ei', region: 'Nordeste pernambucano', food: 'bolo de rolo', expression: 'Oxente!', gentilico: 'Pernambucano', casual: 'cabra', question: 'é ou num é?' },
+            'PI': { greeting: 'Rapaz', region: 'Nordeste piauiense', food: 'cajuína', expression: 'Oxe!', gentilico: 'Piauiense', casual: 'pessoa', question: 'entendeu?' },
+            'RJ': { greeting: 'Fala aí', region: 'Região do Rio', food: 'açaí', expression: 'Muito love!', gentilico: 'Carioca', casual: 'carioca', question: 'sacou?' },
+            'RN': { greeting: 'Oxe', region: 'Nordeste potiguar', food: 'ginga com tapioca', expression: 'Arretado!', gentilico: 'Potiguar', casual: 'cabra', question: 'né não?' },
+            'RS': { greeting: 'Bah', region: 'Sul gaúcho', food: 'churrasco', expression: 'Tchê!', gentilico: 'Gaúcho', casual: 'tchê', question: 'né tchê?' },
+            'RO': { greeting: 'E aí', region: 'Norte rondoniense', food: 'paca', expression: 'Massa!', gentilico: 'Rondoniense', casual: 'caboclo', question: 'tá ligado?' },
+            'RR': { greeting: 'Fala', region: 'Norte roraimense', food: 'peixe tucumã', expression: 'Maneiro!', gentilico: 'Roraimense', casual: 'caboclo', question: 'sacou?' },
+            'SC': { greeting: 'Opa', region: 'Sul catarinense', food: 'sequência de camarão', expression: 'Barbaridade!', gentilico: 'Catarinense', casual: 'guri', question: 'né guri?' },
+            'SP': { greeting: 'E aí', region: 'Grande São Paulo', food: 'coxinha', expression: 'Sampa na veia!', gentilico: 'Paulista', casual: 'paulista', question: 'sacou?' },
+            'SE': { greeting: 'Oxe', region: 'Nordeste sergipano', food: 'caranguejo', expression: 'Oxente!', gentilico: 'Sergipano', casual: 'cabra', question: 'é ou num é?' },
+            'TO': { greeting: 'E aí', region: 'Norte tocantinense', food: 'peixe pintado', expression: 'Massa!', gentilico: 'Tocantinense', casual: 'caboclo', question: 'tá ligado?' },
+            'default': { greeting: 'E aí', region: 'Brasil', food: 'comida regional', expression: 'Nossa!', gentilico: 'Brasileiro', casual: 'pessoa', question: 'né não?' }
+        };
+
+        // Configurações das APIs de geolocalização
+        const GEO_APIS = [
+            {
+                name: 'ipinfo',
+                url: 'https://ipinfo.io/json',
+                timeout: 2000,
+                parser: (data) => ({
+                    city: data.city,
+                    state: data.region,
+                    country: data.country
+                })
+            },
+            {
+                name: 'geojs',
+                url: 'https://get.geojs.io/v1/ip/geo.json',
+                timeout: 2500,
+                parser: (data) => ({
+                    city: data.city,
+                    state: data.region,
+                    country: data.country
+                })
+            },
+            {
+                name: 'ipapi',
+                url: 'http://ip-api.com/json/?fields=status,country,region,city',
+                timeout: 3000,
+                parser: (data) => ({
+                    city: data.city,
+                    state: data.region,
+                    country: data.country
+                })
+            },
+            {
+                name: 'ipapico',
+                url: 'https://ipapi.co/json/',
+                timeout: 3500,
+                parser: (data) => ({
+                    city: data.city,
+                    state: data.region_code,
+                    country: data.country_code
+                })
+            }
+        ];
+
+        // Debug - forçar dados MG para testar
+        userData = {
+            name: '',
+            city: 'Timóteo',
+            state: 'MG',
+            greeting: 'Uai',
+            region: 'Interior mineiro',
+            food: 'pão de queijo',
+            expression: 'Trem bom!',
+            gentilico: 'Mineiro',
+            casual: 'sô',
+            question: 'né não, sô?',
+            hora: new Date().getHours(),
+            minuto: new Date().getMinutes().toString().padStart(2, '0'),
+            periodo: '',
+            periodoText: '',
+            diaSemana: new Date().getDay(),
+            diaSemanaText: '',
+            deviceType: 'mobile'
+        };
+
+        let hasStartedFlow = false;
+        let videoStarted = false;
+        let priceRevealed = false;
+
+        // Detecção avançada de dispositivo
+        function detectDevice() {
+            const width = window.innerWidth;
+            const userAgent = navigator.userAgent.toLowerCase();
+            
+            let deviceType = 'mobile';
+            let deviceModel = 'unknown';
+            
+            if (width >= 768) {
+                deviceType = 'tablet';
+            }
+            
+            if (/iphone/.test(userAgent)) {
+                deviceModel = 'iphone';
+                if (width >= 430) deviceModel = 'iphone-pro-max';
+                else if (width >= 375) deviceModel = 'iphone-standard';
+                else deviceModel = 'iphone-small';
+            } else if (/android/.test(userAgent)) {
+                deviceModel = 'android';
+                if (width >= 400) deviceModel = 'android-large';
+                else if (width >= 360) deviceModel = 'android-standard';
+                else deviceModel = 'android-small';
+            }
+            
+            userData.deviceType = deviceType;
+            userData.deviceModel = deviceModel;
+            
+            console.log(`📱 Dispositivo: ${deviceType} - ${deviceModel} (${width}px)`);
+        }
+
+        // Sistema de detecção de localização com múltiplos backups
+        async function detectLocationWithBackups() {
+            console.log('🌍 Iniciando detecção de localização...');
+            
+            for (let i = 0; i < GEO_APIS.length; i++) {
+                const api = GEO_APIS[i];
+                
+                try {
+                    console.log(`📡 Tentando API ${i + 1}/4: ${api.name}`);
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), api.timeout);
+                    
+                    const response = await fetch(api.url, {
+                        signal: controller.signal,
+                        method: 'GET'
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        const location = api.parser(data);
+                        
+                        if (location.city && location.state) {
+                            console.log(`✅ ${api.name} funcionou:`, location);
+                            
+                            // Mapear estado brasileiro
+                            let stateCode = location.state;
+                            if (location.country === 'BR' || location.country === 'Brazil') {
+                                stateCode = mapStateCode(location.state);
+                            }
+                            
+                            const regional = REGIONAL_DATA[stateCode] || REGIONAL_DATA['default'];
+                            
+                            userData.city = location.city;
+                            userData.state = stateCode;
+                            Object.assign(userData, regional);
+                            
+                            console.log('📍 Localização final:', userData);
+                            return true;
+                        }
+                    }
+                } catch (error) {
+                    console.warn(`❌ ${api.name} falhou:`, error.message);
+                    continue;
+                }
+            }
+            
+            console.log('⚠️ Usando dados padrão (MG)');
+            return false;
+        }
+
+        // Mapear códigos de estado
+        function mapStateCode(stateInput) {
+            const stateMap = {
+                'Acre': 'AC', 'Alagoas': 'AL', 'Amapá': 'AP', 'Amazonas': 'AM',
+                'Bahia': 'BA', 'Ceará': 'CE', 'Distrito Federal': 'DF', 'Espírito Santo': 'ES',
+                'Goiás': 'GO', 'Maranhão': 'MA', 'Mato Grosso': 'MT', 'Mato Grosso do Sul': 'MS',
+                'Minas Gerais': 'MG', 'Pará': 'PA', 'Paraíba': 'PB', 'Paraná': 'PR',
+                'Pernambuco': 'PE', 'Piauí': 'PI', 'Rio de Janeiro': 'RJ', 'Rio Grande do Norte': 'RN',
+                'Rio Grande do Sul': 'RS', 'Rondônia': 'RO', 'Roraima': 'RR', 'Santa Catarina': 'SC',
+                'São Paulo': 'SP', 'Sergipe': 'SE', 'Tocantins': 'TO'
+            };
+            
+            if (stateInput && stateInput.length === 2 && REGIONAL_DATA[stateInput.toUpperCase()]) {
+                return stateInput.toUpperCase();
+            }
+            
+            return stateMap[stateInput] || stateInput || 'MG';
+        }
+
+        // Determinar dia da semana personalizado
+        function getDiaSemanaPersonalizado(diaSemana) {
+            const diasSemana = {
+                0: { dia: 'domingo', text: 'Domingou!' },
+                1: { dia: 'segunda', text: 'Seguntou!' },
+                2: { dia: 'terca', text: 'Terçou!' },
+                3: { dia: 'quarta', text: 'Quartou!' },
+                4: { dia: 'quinta', text: 'Quintou!' },
+                5: { dia: 'sexta', text: 'Sextou!' },
+                6: { dia: 'sabado', text: 'Sabadou!' }
+            };
+            
+            return diasSemana[diaSemana] || { dia: 'dia', text: 'Hoje!' };
+        }
+
+        // Determinar período personalizado do dia
+        function getPeriodoPersonalizado(hora) {
+            if (hora >= 6 && hora <= 9) {
+                return { periodo: 'manhazinha', text: 'Cedinho, né!' };
+            }
+            if (hora >= 10 && hora <= 12) {
+                return { periodo: 'manha', text: 'Manhã boa!' };
+            }
+            if (hora >= 13 && hora <= 16) {
+                return { periodo: 'tarde', text: 'Almoçou já?' };
+            }
+            if (hora >= 17 && hora <= 17) {
+                return { periodo: 'quase-noite', text: 'Tardezinha!' };
+            }
+            if (hora >= 18 && hora <= 20) {
+                return { periodo: 'noitinha', text: 'Jantou já?' };
+            }
+            if (hora >= 21 && hora <= 23) {
+                return { periodo: 'noite', text: 'Noite boa!' };
+            }
+            if ((hora >= 0 && hora <= 5) || hora === 24) {
+                return { periodo: 'madrugada', text: 'Madruga aí?' };
+            }
+            
+            return { periodo: 'dia', text: 'Tudo bem?' };
+        }
+
+        // Gerar texto do botão regionalizado
+        function generateContinueButtonText() {
+            const regional = REGIONAL_DATA[userData.state] || REGIONAL_DATA['default'];
+            
+            const buttonTexts = {
+                'MG': `${regional.gentilico}, vamos ao vídeo!`,
+                'RS': `${regional.gentilico}, vamos ao vídeo!`, 
+                'BA': `${regional.gentilico}, vamos ao vídeo!`,
+                'SP': `${regional.gentilico}, vamos ao vídeo!`,
+                'RJ': `${regional.gentilico}, vamos ao vídeo!`,
+                'default': `${regional.gentilico}, vamos ao vídeo!`
+            };
+            
+            return buttonTexts[userData.state] || buttonTexts['default'];
+        }
+        function generateReflectionCard() {
+            const regional = REGIONAL_DATA[userData.state] || REGIONAL_DATA['default'];
+            
+            // Adaptar conteúdo por região mantendo estrutura
+            let insightText = '';
+            let questionPhrase = '';
+            
+            if (regional.greeting === 'Uai') {
+                insightText = `Sabe o que é trem doido? Por trás de um simples "não posso", "uai, por quê?", "porém"... pode ter umas travas escondidas aí, ${regional.casual}!`;
+                questionPhrase = 'uai, por quê?';
+            } else if (regional.greeting === 'Bah') {
+                insightText = `Sabe o que é trem doido? Por trás de um simples "não posso", "bah, por quê?", "porém"... pode ter umas travas escondidas aí, ${regional.casual}!`;
+                questionPhrase = 'bah, por quê?';
+            } else if (regional.greeting === 'Oxe') {
+                insightText = `Sabe o que é trem doido? Por trás de um simples "não posso", "oxe, por quê?", "porém"... pode ter umas travas escondidas aí, ${regional.casual}!`;
+                questionPhrase = 'oxe, por quê?';
+            } else {
+                insightText = `Sabe o que é trem doido? Por trás de um simples "não posso", "${regional.greeting.toLowerCase()}, por quê?", "porém"... pode ter umas travas escondidas aí, ${regional.casual}!`;
+                questionPhrase = `${regional.greeting.toLowerCase()}, por quê?`;
+            }
+            
+            return {
+                question: `${regional.greeting}, quando foi a última vez que você tomou uma decisão baseada no que realmente queria, ${regional.casual}?`,
+                insight: insightText,
+                cta: `Bora ver no vídeo como isso funciona, ${regional.question}`
+            };
+        }
+
+        // Fluxo principal
+        async function initFlow() {
+            if (hasStartedFlow) return;
+            hasStartedFlow = true;
+
+            console.log('🚀 Iniciando fluxo...');
+            
+            detectDevice();
+            await detectLocationWithBackups();
+            
+            const agora = new Date();
+            userData.hora = agora.getHours();
+            userData.minuto = agora.getMinutes().toString().padStart(2, '0');
+            userData.diaSemana = agora.getDay();
+            
+            const periodoData = getPeriodoPersonalizado(userData.hora);
+            userData.periodo = periodoData.periodo;
+            userData.periodoText = periodoData.text;
+            
+            const diaData = getDiaSemanaPersonalizado(userData.diaSemana);
+            userData.diaSemanaText = diaData.text;
+            
+            console.log('📊 Dados finais do usuário:', userData);
+            
+            await executeShockSequence();
+        }
+
+        // Sequência de shock hipnótica
+        async function executeShockSequence() {
+            const avatar = document.getElementById('avatar');
+            const message = document.getElementById('avatarMessage');
+            
+            avatar.classList.add('speaking');
+
+            const hypnoticMessages = [
+                { 
+                    text: `${userData.greeting}, gente!`, 
+                    class: "shock", 
+                    duration: 800 
+                },
+                { 
+                    text: `${userData.hora}:${userData.minuto}`, 
+                    class: "location", 
+                    duration: 1200
+                },
+                { 
+                    text: userData.diaSemanaText, 
+                    class: "shock", 
+                    duration: 1000
+                },
+                { 
+                    text: userData.region, 
+                    class: "location", 
+                    duration: 800
+                },
+                { 
+                    text: `${userData.food}, né?`, 
+                    class: "cultural", 
+                    duration: 1200
+                },
+                { 
+                    text: "Como sei? Olha abaixo!", 
+                    class: "shock", 
+                    duration: 1500
+                }
+            ];
+
+            for (const msg of hypnoticMessages) {
+                message.classList.remove('show');
+                await sleep(150);
+                
+                message.textContent = msg.text;
+                message.className = `avatar-message show ${msg.class}`;
+                
+                await sleep(msg.duration);
+            }
+
+            avatar.classList.remove('speaking');
+            message.classList.remove('show');
+            
+            // Avatar vira e se transforma no card (Opção 4)
+            transformAvatarToCard();
+        }
+
+        // Transformar avatar no card (Opção 4)
+        async function transformAvatarToCard() {
+            const avatar = document.getElementById('avatar');
+            const overlay = document.getElementById('reflectionOverlay');
+            
+            // Avatar inicia transformação
+            avatar.classList.add('transforming');
+            
+            // Aguardar avatar começar a virar
+            await sleep(1000);
+            
+            // Mostrar overlay com card
+            showReflectionCardOverlay();
+        }
+
+        // Mostrar card de reflexão no overlay
+        function showReflectionCardOverlay() {
+            const overlay = document.getElementById('reflectionOverlay');
+            const questionEl = document.getElementById('cardQuestionOverlay');
+            const insightEl = document.getElementById('cardInsightOverlay');
+            const ctaEl = document.getElementById('cardCtaOverlay');
+            const continueIndicator = document.getElementById('continueIndicator');
+            
+            // Gerar conteúdo regionalizado
+            const content = generateReflectionCard();
+            
+            // Debug - verificar conteúdo
+            console.log('🃏 Conteúdo do card gerado:', content);
+            
+            // Preencher conteúdo
+            questionEl.textContent = content.question;
+            insightEl.textContent = content.insight;
+            ctaEl.textContent = content.cta;
+            
+            // Preencher texto do botão regionalizado
+            continueIndicator.textContent = generateContinueButtonText();
+            
+            // Debug - verificar se foi preenchido
+            console.log('📝 Elementos preenchidos:', {
+                question: questionEl.textContent,
+                insight: insightEl.textContent,
+                cta: ctaEl.textContent
+            });
+            
+            // Mostrar overlay
+            overlay.classList.add('show');
+            
+            // TTS para pergunta principal
+            performTTS("Quando foi a última vez que você decidiu pelo que realmente queria?");
+            
+            // Após 6 segundos, mostrar indicador "Toque para continuar"
+            setTimeout(() => {
+                continueIndicator.classList.add('show');
+                
+                // Listener para clique/toque no indicador OU no card inteiro
+                const cardClickHandler = function() {
+                    transitionOverlayToVideo();
+                };
+                
+                continueIndicator.addEventListener('click', cardClickHandler);
+                overlay.addEventListener('click', cardClickHandler);
+                
+                // Fallback automático após 15 segundos se usuário não tocar
+                setTimeout(() => {
+                    if (overlay.classList.contains('show')) {
+                        console.log('⏰ Fallback automático ativado após 21 segundos');
+                        transitionOverlayToVideo();
+                    }
+                }, 15000); // 15 segundos adicionais = total 21s
+                
+            }, 6000); // 6 segundos para aparecer o indicador
+        }
+
+        // Transição do overlay para vídeo
+        function transitionOverlayToVideo() {
+            const overlay = document.getElementById('reflectionOverlay');
+            const videoSection = document.getElementById('videoSection');
+            const body = document.body;
+            
+            // Iniciar transição do card no overlay
+            overlay.classList.add('transitioning');
+            
+            // Mudar fundo para modo vídeo e mostrar seção do vídeo
+            setTimeout(() => {
+                body.classList.add('video-mode');
+                videoSection.classList.add('show');
+                
+                // Esconder overlay após vídeo aparecer
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 1000);
+                
+                // Setup dos triggers do vídeo
+                setTimeout(() => {
+                    setupVideoTriggers();
+                }, 2000);
+                
+            }, 1500);
+        }
+
+        // Triggers do vídeo
+        function setupVideoTriggers() {
+            const video = document.getElementById('specialVideo');
+            
+            // Auto-play otimizado
+            if (userData.deviceType !== 'mobile' || userData.deviceModel.includes('iphone')) {
+                video.play().catch(() => {
+                    console.log('Autoplay bloqueado - normal em mobile');
+                });
+            }
+            
+            // Trigger principal aos 60 segundos
+            video.addEventListener('timeupdate', function() {
+                if (this.currentTime >= 60 && !priceRevealed) {
+                    revealPrice();
+                }
+            });
+            
+            // Trigger de pausa
+            video.addEventListener('pause', function() {
+                if (this.currentTime >= 30 && !priceRevealed) {
+                    revealPrice();
+                }
+            });
+            
+            // Trigger de backup por tempo absoluto
+            setTimeout(() => {
+                if (!priceRevealed) {
+                    revealPrice();
+                }
+            }, 90000);
+        }
+
+        // Revelar preço
+        function revealPrice() {
+            if (priceRevealed) return;
+            priceRevealed = true;
+            
+            const valueBadge = document.getElementById('valueBadge');
+            
+            valueBadge.textContent = 'Apenas R$ 47';
+            valueBadge.classList.add('price-reveal');
+            
+            performTTS("Acesso completo por apenas 47 reais!");
+        }
+
+        // TTS otimizado
+        function performTTS(text) {
+            if (!text || text.length > 80) return;
+            
+            if ('speechSynthesis' in window) {
+                try {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'pt-BR';
+                    utterance.rate = 1.1;
+                    utterance.volume = 0.8;
+                    speechSynthesis.speak(utterance);
+                } catch (error) {
+                    console.warn('TTS falhou:', error);
+                }
+            }
+        }
+
+        // Comprar com dados regionais otimizados
+        function buyNow() {
+            const greeting = `${userData.greeting} Adriana! Sou de ${userData.city}-${userData.state}.`;
+            const message = encodeURIComponent(
+                `${greeting} ${userData.expression} Vim pelo seu link e fiquei impressionado! Quero o acesso completo ao "Conhecer a Ti Mesmo" por R$ 47. Como ${userData.gentilico.toLowerCase()}, sei que vai me ajudar muito! Como posso começar minha transformação mental?`
+            );
+
+            window.open(`https://wa.me/5531999999999?text=${message}`, '_blank');
+        }
+
+        // Utilitários
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Listener para redimensionamento
+        window.addEventListener('resize', detectDevice);
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎯 DOM carregado, iniciando fluxo em 1.5 segundos...');
+            setTimeout(initFlow, 1500);
+        });
+
+        // Funções globais
+        window.buyNow = buyNow;
+    </script>
+</body>
+</html>
